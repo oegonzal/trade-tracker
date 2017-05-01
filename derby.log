@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sun Apr 30 03:29:26 PDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015b-be68-6c63-000006bc5e50 
-on database directory memory:/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data/testdb with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Mon May 01 03:21:02 PDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015b-c387-18bf-00000b1aa3c0 
+on database directory memory:/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data/testdb with class loader java.net.URLClassLoader@60bad1f 
 Loaded from file:/home/oegonzal/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_131-b11

@@ -1,0 +1,25 @@
+The setup:
+https://www.javacodegeeks.com/2016/11/recipe-getting-started-spring-boot-angular-2.html
+
+Angular Server: (turn on for hotreloading, using proxy to redirect
+requests to Spring server)
+ng serve --proxy-config proxy.conf.json
+If port is in use do something like this: 
+ng serve --port 3000 --proxy-config proxy.conf.json 
+
+
+To start the spring server: 
+mvn spring-boot:run
+
+Run both of this commands on the home directory of the project
+
+Server side reload:
+http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html#using-boot-devtools-restart
+
+
+proxy http calls to backend:
+https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
+
+
+make new angular2 component
+ng g component (component name) 

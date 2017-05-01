@@ -1,0 +1,25 @@
+-rw-rw-r--   1 oegonzal oegonzal     0 Apr 30 22:29 filesAfterNgInit
+drwxrwxr-x   9 oegonzal oegonzal  4096 Apr 30 22:29 .
+drwxrwxr-x 761 oegonzal oegonzal 24576 Apr 30 22:26 node_modules
+-rw-rw-r--   1 oegonzal oegonzal  2691 Apr 30 22:23 tslint.json
+drwxrwxr-x   7 oegonzal oegonzal  4096 Apr 30 22:23 src
+-rw-rw-r--   1 oegonzal oegonzal  1182 Apr 30 22:23 README.md
+-rw-rw-r--   1 oegonzal oegonzal   757 Apr 30 22:23 protractor.conf.js
+-rw-rw-r--   1 oegonzal oegonzal  1240 Apr 30 22:23 package.json
+-rw-rw-r--   1 oegonzal oegonzal  1127 Apr 30 22:23 karma.conf.js
+-rw-r--r--   1 oegonzal oegonzal   488 Apr 30 22:23 .gitignore
+-rw-rw-r--   1 oegonzal oegonzal   245 Apr 30 22:23 .editorconfig
+drwxrwxr-x   2 oegonzal oegonzal  4096 Apr 30 22:23 e2e
+-rw-rw-r--   1 oegonzal oegonzal  1278 Apr 30 22:23 angular-cli.json
+drwxrwxr-x   8 oegonzal oegonzal  4096 Apr 30 04:42 .git
+-rw-rw-r--   1 oegonzal oegonzal   786 Apr 30 03:29 derby.log
+-rw-r--r--   1 oegonzal oegonzal  1804 Apr 30 01:54 pom.xml
+drwxrwxr-x   4 oegonzal oegonzal  4096 Apr 30 01:34 target
+drwxrwxr-x   2 oegonzal oegonzal  4096 Apr 30 01:34 .settings
+-rw-rw-r--   1 oegonzal oegonzal   947 Apr 30 01:34 .project
+-rw-r--r--   1 oegonzal oegonzal  4994 Apr 30 01:34 mvnw.cmd
+-rwxr-xr-x   1 oegonzal oegonzal  6468 Apr 30 01:34 mvnw
+drwxrwxr-x   3 oegonzal oegonzal  4096 Apr 30 01:34 .mvn
+-rw-rw-r--   1 oegonzal oegonzal  1195 Apr 30 01:34 .classpath
+drwxrwxr-x   9 oegonzal oegonzal  4096 Apr 30 01:34 ..
+total 120

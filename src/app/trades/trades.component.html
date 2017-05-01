@@ -1,0 +1,24 @@
+
+<div *ngIf="appState == 'default'">
+  <h3>Add Trade</h3>
+  <form (submit)="addTrade()">
+    <input class="form-control" type="text" [(ngModel)]="text" name="test">
+  </form>
+</div>
+
+<div *ngIf="appState == 'edit'">
+  <h3>Update Trade</h3>
+  <form (submit)="updateTrade()">
+    <input class="form-control" type="text" [(ngModel)]="text" name="test">
+  </form>
+</div>
+
+<h3> Trades List </h3>
+<ul  class="list-group">
+  <li *ngFor="let trade of trades"  class="list-group-item">
+    <span (click)="editTrade(trade)"> {{trade.text}} </span>
+    <button (click)="deleteTrade(trade.text)" class="btn btn-danger btn-sm">x</button>
+  </li>
+</ul>
+
+<button (click)="getStocks()"> Get Stocks </button>
