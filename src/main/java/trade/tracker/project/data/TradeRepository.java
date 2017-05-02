@@ -15,4 +15,6 @@ public interface TradeRepository extends CrudRepository<Trade, String>{
 	public List<Trade> findByStockId(String stockId);
 	//This has to be camelCase! When looking in an object 
 	//we look through their properties too with the camel case! JPA does this!
+	
+	
 }

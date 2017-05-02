@@ -23,3 +23,22 @@ https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
 
 make new angular2 component
 ng g component (component name) 
+
+
+--------------------------------------------
+
+Oracle database
+https://www.mkyong.com/spring-boot/spring-boot-spring-data-jpa-oracle-example/
+
+https://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/
+
+
+
+Error downloading jar file from oracle:
+
+https://community.oracle.com/thread/2560639
+
+
+Mysql database
+
+https://dzone.com/articles/crud-using-spring-data-rest
