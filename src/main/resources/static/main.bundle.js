@@ -42,16 +42,22 @@ var TradeService = (function (_super) {
     function TradeService(_http) {
         _super.call(this);
         this._http = _http;
-        this._url = '/stocks';
+        this._url = '/api/trades';
         console.log('TradeService Initialized...');
         this.load();
     }
     TradeService.prototype.addTrade = function (newTrade) {
-        var trades = JSON.parse(localStorage.getItem('trades'));
-        trades.push(newTrade);
-        localStorage.setItem('trades', JSON.stringify(trades));
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]();
+        headers.append('Content-Type', 'applications/json; charset=utf-8');
+        this._http.post(this._url, newTrade, headers)
+            .subscribe(function () { }, function (err) { return console.log(err); });
     };
     TradeService.prototype.getTrades = function () {
+        return this._http.get(this._url)
+            .map(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    TradeService.prototype.getNotifications = function () {
         var trades = JSON.parse(localStorage.getItem('trades'));
         return trades;
     };
@@ -73,24 +79,18 @@ var TradeService = (function (_super) {
         }
         localStorage.setItem('trades', JSON.stringify(trades));
     };
-    TradeService.prototype.getStocks = function () {
-        return this._http.get(this._url)
-            .map(function (response) { return response.json(); })
-            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
-            .catch(this.handleError);
-    };
     TradeService.prototype.handleError = function (error) {
         console.error(error);
         return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json().error || 'Server error');
     };
     TradeService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["d" /* Injectable */])(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === 'function' && _a) || Object])
     ], TradeService);
     return TradeService;
     var _a;
 }(__WEBPACK_IMPORTED_MODULE_2__init_trades__["a" /* Init */]));
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/trade.service.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/trade.service.js.map
 
 /***/ }),
 
@@ -118,12 +118,27 @@ var TradesComponent = (function () {
         this.appState = 'default';
     }
     TradesComponent.prototype.ngOnInit = function () {
-        this.trades = this._tradeService.getTrades();
+        this.notifications = this._tradeService.getNotifications();
+        this.fieldIndex = 1;
+        this.getTrades();
+    };
+    TradesComponent.prototype.getTrades = function () {
+        var _this = this;
+        this._tradeService.getTrades()
+            .subscribe(function (trades) { return _this.trades = trades; }, function (error) { return _this.errorMessage = error; });
     };
     TradesComponent.prototype.addTrade = function () {
         var newTrade = {
-            text: this.text
+            dateCreated: +new Date(),
+            stockSymbol: this.stockSymbol,
+            initialPrice: this.initialPrice,
+            predictionPrice: this.predictionPrice,
+            stopPrice: this.stopPrice,
+            predictionDate: new Date(this.predictionDate).getTime(),
+            tradeStatus: 'Pending'
         };
+        console.log('New Trade is: ' + JSON.stringify(newTrade));
+        console.log(newTrade.dateCreated);
         this.trades.push(newTrade);
         this._tradeService.addTrade(newTrade);
     };
@@ -148,10 +163,11 @@ var TradesComponent = (function () {
         }
         this._tradeService.updateTrade(this.oldText, this.text);
     };
-    TradesComponent.prototype.getStocks = function () {
-        var _this = this;
-        this._tradeService.getStocks()
-            .subscribe(function (stocks) { return console.log(stocks); }, function (error) { return _this.errorMessage = error; });
+    TradesComponent.prototype.nextField = function () {
+        this.fieldIndex = Math.min(5, this.fieldIndex + 1);
+    };
+    TradesComponent.prototype.prevField = function () {
+        this.fieldIndex = Math.max(1, this.fieldIndex - 1);
     };
     TradesComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Component */])({
@@ -164,7 +180,7 @@ var TradesComponent = (function () {
     return TradesComponent;
     var _a;
 }());
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/trades.component.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/trades.component.js.map
 
 /***/ }),
 
@@ -199,7 +215,7 @@ if (__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment *
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["a" /* enableProdMode */])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_3__app_app_module__["a" /* AppModule */]);
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/main.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/main.js.map
 
 /***/ }),
 
@@ -239,7 +255,7 @@ var AppComponent = (function () {
     ], AppComponent);
     return AppComponent;
 }());
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/app.component.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/app.component.js.map
 
 /***/ }),
 
@@ -293,7 +309,7 @@ var AppModule = (function () {
     ], AppModule);
     return AppModule;
 }());
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/app.module.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/app.module.js.map
 
 /***/ }),
 
@@ -307,29 +323,29 @@ var Init = (function () {
     }
     Init.prototype.load = function () {
         console.log(localStorage.getItem('trades'));
-        if (localStorage.getItem('trades') === null || localStorage.getItem('trades') == 'undefined') {
+        if (localStorage.getItem('trades') === null || localStorage.getItem('trades') === 'undefined') {
             console.log('No Trades found... Creating...');
             var trades = [
                 {
-                    text: "akldsjfklasjdf"
+                    text: 'Gold is down Today - Bloomberg'
                 },
                 {
-                    text: "asdjf;ajsdfklasjdkfl"
+                    text: 'Rising Activity in JNUG'
                 },
                 {
-                    text: "aksdfj;asjdfklajsdfkljaskldjfk"
+                    text: 'SPY showing high volatility'
                 }
             ];
             localStorage.setItem('trades', JSON.stringify(trades));
             return;
         }
         else {
-            console.log("Found trades....");
+            console.log('Found trades....');
         }
     };
     return Init;
 }());
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/init-trades.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/init-trades.js.map
 
 /***/ }),
 
@@ -364,7 +380,7 @@ var TradeslsComponent = (function () {
     ], TradeslsComponent);
     return TradeslsComponent;
 }());
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/tradesls.component.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/tradesls.component.js.map
 
 /***/ }),
 
@@ -380,7 +396,7 @@ var TradeslsComponent = (function () {
 var environment = {
     production: false
 };
-//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data2/src/environment.js.map
+//# sourceMappingURL=/home/oegonzal/Documents/workspace-sts-3.8.4.RELEASE/trade-track-data3/src/environment.js.map
 
 /***/ }),
 
@@ -415,7 +431,7 @@ module.exports = "<nav class=\"navbar navbar-inverse\">\n      <div class=\"cont
 /***/ 616:
 /***/ (function(module, exports) {
 
-module.exports = "\n<div *ngIf=\"appState == 'default'\">\n  <h3>Add Trade</h3>\n  <form (submit)=\"addTrade()\">\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"text\" name=\"test\">\n  </form>\n</div>\n\n<div *ngIf=\"appState == 'edit'\">\n  <h3>Update Trade</h3>\n  <form (submit)=\"updateTrade()\">\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"text\" name=\"test\">\n  </form>\n</div>\n\n<h3> Trades List </h3>\n<ul  class=\"list-group\">\n  <li *ngFor=\"let trade of trades\"  class=\"list-group-item\">\n    <span (click)=\"editTrade(trade)\"> {{trade.text}} </span>\n    <button (click)=\"deleteTrade(trade.text)\" class=\"btn btn-danger btn-sm\">x</button>\n  </li>\n</ul>\n\n<button (click)=\"getStocks()\"> Get Stocks </button>"
+module.exports = "\n<form (submit)=\"addTrade()\">\n\n  <div *ngIf=\"fieldIndex == 1\">\n    <h3>Stock Symbol: </h3>\n    <input [(ngModel)]=\"stockSymbol\" name=\"stockSymbol\"\n         class=\"form-control col-sm\" style=\"width: 70%; float:left;\" type=\"text\">\n  </div>\n\n  <div *ngIf=\"fieldIndex == 2\">\n    <h3>Initial Price: </h3>\n    <input [(ngModel)]=\"initialPrice\" name=\"initialPrice\"\n         class=\"form-control col-sm\" style=\"width: 70%; float:left;\" type=\"text\">\n  </div>\n  \n  <div *ngIf=\"fieldIndex == 3\">\n    <h3>Prediction Price: </h3>\n    <input [(ngModel)]=\"predictionPrice\" name=\"predictionPrice\"\n         class=\"form-control col-sm\" style=\"width: 70%; float:left;\" type=\"text\">\n  </div>\n  \n  <div *ngIf=\"fieldIndex == 4\">\n    <h3>Stop Price: </h3>\n    <input [(ngModel)]=\"stopPrice\" name=\"stopPrice\"\n         class=\"form-control col-sm\" style=\"width: 70%; float:left;\" type=\"text\">\n  </div>\n\n  <div *ngIf=\"fieldIndex == 5\">\n    <h3>Prediction Date (MM-dd-yyyy): </h3>\n    <input [(ngModel)]=\"predictionDate\" name=\"predictionDate\"\n         class=\"form-control col-sm\" style=\"width: 70%; float:left;\" type=\"text\">\n  </div>\n\n</form>\n\n<button type=\"button\" *ngIf=\"fieldIndex == 5\" (click)=\"addTrade()\" \n        style=\"float: left; margin-left: 15px; border-radius: 3px;\" class=\"btn btn-info\">Submit</button>\n\n<button type=\"button\" *ngIf=\"fieldIndex != 5\" (click)=\"nextField()\" \n        style=\"float: left; margin-left: 15px; border-radius: 3px;\" class=\"btn btn-info\">Next</button>\n\n<button type=\"button\" *ngIf=\"fieldIndex != 1\" (click)=\"prevField()\" \n        style=\"float: left; margin-left: 15px; border-radius: 3px;\" class=\"btn btn-warning\">Prev</button>\n\n<div style=\"clear: both\"></div>\n\n<h3> Notifications: </h3>\n<ul  class=\"list-group\">\n  <li *ngFor=\"let notification of notifications\"  class=\"list-group-item\">\n    <span (click)=\"editTrade(notification)\"> {{notification.text}} </span>\n    <button (click)=\"deleteTrade(notification.text)\" class=\"btn btn-danger btn-xs\" \n            style=\"border-radius: 5px; margin-left: 8px;\">x</button>\n  </li>\n</ul>\n\n<div class=\"panel panel-default\">\n  <!-- Default panel contents -->\n  <div class=\"panel-heading\">Current Results for trades: </div>\n  <div class=\"panel-body\">\n    <p>Statistics...</p>\n  </div>\n\n  <!-- Table -->\n  <table class=\"table\">\n    <thead>\n      <tr>\n        <th>Symbol</th>\n        <th>Starting Price</th>\n        <th>Prediction Price</th>\n      </tr>\n    </thead>\n\n    <tbody>\n      <tr *ngFor=\"let trade of trades\">\n        <td>{{ trade.stockSymbol }}</td>\n        <td>{{ trade.initialPrice }}</td>\n        <td>{{ trade.predictionPrice }}</td>\n      </tr>\n    </tbody>\n\n  </table>\n</div>"
 
 /***/ }),
 

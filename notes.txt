@@ -7,6 +7,8 @@ ng serve --proxy-config proxy.conf.json
 If port is in use do something like this: 
 ng serve --port 3000 --proxy-config proxy.conf.json 
 
+To build on change:
+ng build --watch
 
 To start the spring server: 
 mvn spring-boot:run

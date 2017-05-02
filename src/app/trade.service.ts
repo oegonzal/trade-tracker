@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { Init } from './init-trades';
 
 import { Observable } from 'rxjs/Observable';
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TradeService extends Init {
 
-  private _url = '/stocks';
+  private _url = '/api/trades';
 
   constructor(private _http: Http) {
     super();
@@ -19,14 +19,26 @@ export class TradeService extends Init {
   }
 
   addTrade(newTrade) {
-    const trades = JSON.parse(localStorage.getItem('trades'));
+    const headers = new Headers();
+    headers.append('Content-Type', 'applications/json; charset=utf-8');
 
-    trades.push(newTrade);
-    localStorage.setItem('trades', JSON.stringify(trades));
+    this._http.post(this._url, newTrade, headers)
+        .subscribe(
+          () => {},
+          err => console.log(err)
+        );
   }
 
   getTrades() {
+    return this._http.get(this._url)
+            .map((response: Response) => response.json())
+            // .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handleError);
+  }
+
+  getNotifications() {
     const trades = JSON.parse(localStorage.getItem('trades'));
+
     return trades;
   }
 
@@ -52,13 +64,6 @@ export class TradeService extends Init {
     }
 
     localStorage.setItem('trades', JSON.stringify(trades));
-  }
-
-  getStocks() {
-    return this._http.get(this._url)
-            .map((response: Response) => response.json())
-            .do(data => console.log('All: ' + JSON.stringify(data)))
-            .catch(this.handleError);
   }
 
   private handleError(error: Response) {

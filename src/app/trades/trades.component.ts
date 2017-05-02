@@ -8,22 +8,54 @@ import { TradeService } from '../trade.service';
   styleUrls: ['./trades.component.css']
 })
 export class TradesComponent implements OnInit {
+
+  // Tutorial
   trades;
+  notifications;
   text;
   appState = 'default';
   oldText;
   errorMessage: string;
 
+  // Added by me
+  fieldIndex;
+  stockSymbol;
+  initialPrice;
+  predictionPrice;
+  stopPrice;
+  predictionDate;
+
   constructor(private _tradeService: TradeService) { }
 
   ngOnInit() {
-    this.trades = this._tradeService.getTrades();
+    this.notifications = this._tradeService.getNotifications();
+    this.fieldIndex = 1;
+
+    this.getTrades();
+  }
+
+  getTrades() {
+    this._tradeService.getTrades()
+      .subscribe(
+        trades => this.trades = trades,
+        error => this.errorMessage = <any>error
+      );
   }
 
   addTrade() {
     const newTrade = {
-      text: this.text
+      dateCreated: + new Date(),
+      stockSymbol: this.stockSymbol,
+      initialPrice: this.initialPrice,
+      predictionPrice: this.predictionPrice,
+      stopPrice: this.stopPrice,
+      predictionDate: new Date(this.predictionDate).getTime(),
+      tradeStatus: 'Pending'
     };
+
+    console.log('New Trade is: ' + JSON.stringify(newTrade));
+    console.log(newTrade.dateCreated);
+
 
     this.trades.push(newTrade);
 
@@ -56,12 +88,12 @@ export class TradesComponent implements OnInit {
     this._tradeService.updateTrade(this.oldText, this.text);
   }
 
-  getStocks() {
-    this._tradeService.getStocks()
-      .subscribe(
-        stocks => console.log(stocks),
-        error => this.errorMessage = <any>error
-      );
+  nextField(){
+    this.fieldIndex = Math.min(5, this.fieldIndex + 1);
+  }
+
+  prevField(){
+    this.fieldIndex = Math.max(1, this.fieldIndex - 1);
   }
 
 }

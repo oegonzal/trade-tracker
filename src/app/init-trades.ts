@@ -1,25 +1,24 @@
 export class Init{
     load(){
         console.log(localStorage.getItem('trades'));
-        if(localStorage.getItem('trades') === null || localStorage.getItem('trades') == 'undefined'){
+        if(localStorage.getItem('trades') === null || localStorage.getItem('trades') === 'undefined'){
             console.log('No Trades found... Creating...');
-        
-            var trades = [
+            const trades = [
                 {
-                    text: "akldsjfklasjdf"
+                    text: 'Gold is down Today - Bloomberg'
                 },
                 {
-                    text: "asdjf;ajsdfklasjdkfl"
+                    text: 'Rising Activity in JNUG'
                 },
                 {
-                    text: "aksdfj;asjdfklajsdfkljaskldjfk"
+                    text: 'SPY showing high volatility'
                 }
             ]
 
             localStorage.setItem('trades', JSON.stringify(trades));
-            return 
+            return;
         } else {
-            console.log("Found trades....");
+            console.log('Found trades....');
         }
     }
 }

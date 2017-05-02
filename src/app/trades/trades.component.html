@@ -1,24 +1,82 @@
 
-<div *ngIf="appState == 'default'">
-  <h3>Add Trade</h3>
-  <form (submit)="addTrade()">
-    <input class="form-control" type="text" [(ngModel)]="text" name="test">
-  </form>
-</div>
+<form (submit)="addTrade()">
 
-<div *ngIf="appState == 'edit'">
-  <h3>Update Trade</h3>
-  <form (submit)="updateTrade()">
-    <input class="form-control" type="text" [(ngModel)]="text" name="test">
-  </form>
-</div>
+  <div *ngIf="fieldIndex == 1">
+    <h3>Stock Symbol: </h3>
+    <input [(ngModel)]="stockSymbol" name="stockSymbol"
+         class="form-control col-sm" style="width: 70%; float:left;" type="text">
+  </div>
 
-<h3> Trades List </h3>
+  <div *ngIf="fieldIndex == 2">
+    <h3>Initial Price: </h3>
+    <input [(ngModel)]="initialPrice" name="initialPrice"
+         class="form-control col-sm" style="width: 70%; float:left;" type="text">
+  </div>
+  
+  <div *ngIf="fieldIndex == 3">
+    <h3>Prediction Price: </h3>
+    <input [(ngModel)]="predictionPrice" name="predictionPrice"
+         class="form-control col-sm" style="width: 70%; float:left;" type="text">
+  </div>
+  
+  <div *ngIf="fieldIndex == 4">
+    <h3>Stop Price: </h3>
+    <input [(ngModel)]="stopPrice" name="stopPrice"
+         class="form-control col-sm" style="width: 70%; float:left;" type="text">
+  </div>
+
+  <div *ngIf="fieldIndex == 5">
+    <h3>Prediction Date (MM-dd-yyyy): </h3>
+    <input [(ngModel)]="predictionDate" name="predictionDate"
+         class="form-control col-sm" style="width: 70%; float:left;" type="text">
+  </div>
+
+</form>
+
+<button type="button" *ngIf="fieldIndex == 5" (click)="addTrade()" 
+        style="float: left; margin-left: 15px; border-radius: 3px;" class="btn btn-info">Submit</button>
+
+<button type="button" *ngIf="fieldIndex != 5" (click)="nextField()" 
+        style="float: left; margin-left: 15px; border-radius: 3px;" class="btn btn-info">Next</button>
+
+<button type="button" *ngIf="fieldIndex != 1" (click)="prevField()" 
+        style="float: left; margin-left: 15px; border-radius: 3px;" class="btn btn-warning">Prev</button>
+
+<div style="clear: both"></div>
+
+<h3> Notifications: </h3>
 <ul  class="list-group">
-  <li *ngFor="let trade of trades"  class="list-group-item">
-    <span (click)="editTrade(trade)"> {{trade.text}} </span>
-    <button (click)="deleteTrade(trade.text)" class="btn btn-danger btn-sm">x</button>
+  <li *ngFor="let notification of notifications"  class="list-group-item">
+    <span (click)="editTrade(notification)"> {{notification.text}} </span>
+    <button (click)="deleteTrade(notification.text)" class="btn btn-danger btn-xs" 
+            style="border-radius: 5px; margin-left: 8px;">x</button>
   </li>
 </ul>
 
-<button (click)="getStocks()"> Get Stocks </button>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Current Results for trades: </div>
+  <div class="panel-body">
+    <p>Statistics...</p>
+  </div>
+
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Starting Price</th>
+        <th>Prediction Price</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let trade of trades">
+        <td>{{ trade.stockSymbol }}</td>
+        <td>{{ trade.initialPrice }}</td>
+        <td>{{ trade.predictionPrice }}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
